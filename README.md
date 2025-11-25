@@ -2,13 +2,13 @@
 
 # All-in-One Assistant for Claude Code, Codex & Gemini CLI
 
-[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cc-switch/releases)
+[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cli-hub/releases)
 [![Trending](https://img.shields.io/badge/🔥_TypeScript_Trending-Daily%20%7C%20Weekly%20%7C%20Monthly-ff6b6b.svg)](https://github.com/trending/typescript)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cc-switch/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cli-hub/releases)
 [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%202-orange.svg)](https://tauri.app/)
-[![Downloads](https://img.shields.io/endpoint?url=https://api.pinstudios.net/api/badges/downloads/farion1231/cc-switch/total)](https://github.com/farion1231/cc-switch/releases/latest)
+[![Downloads](https://img.shields.io/endpoint?url=https://api.pinstudios.net/api/badges/downloads/farion1231/cli-hub/total)](https://github.com/farion1231/cli-hub/releases/latest)
 
-<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcc-switch | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcli-hub | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 English | [中文](README_ZH.md) | [Changelog](CHANGELOG.md)
 
@@ -33,7 +33,7 @@ Get 10% OFF the GLM CODING PLAN with [this link](https://z.ai/subscribe?ic=8JVLJ
 <table>
 <tr>
 <td width="180"><img src="assets/partners/logos/packycode.png" alt="PackyCode" width="150"></td>
-<td>Thanks to PackyCode for sponsoring this project! PackyCode is a reliable and efficient API relay service provider, offering relay services for Claude Code, Codex, Gemini, and more. PackyCode provides special discounts for our software users: register using <a href="https://www.packyapi.com/register?aff=cc-switch">this link</a> and enter the "cc-switch" promo code during recharge to get 10% off.</td>
+<td>Thanks to PackyCode for sponsoring this project! PackyCode is a reliable and efficient API relay service provider, offering relay services for Claude Code, Codex, Gemini, and more. PackyCode provides special discounts for our software users: register using <a href="https://www.packyapi.com/register?aff=cli-hub">this link</a> and enter the "cli-hub" promo code during recharge to get 10% off.</td>
 </tr>
 
 <tr>
@@ -82,7 +82,7 @@ Get 10% OFF the GLM CODING PLAN with [this link](https://z.ai/subscribe?ic=8JVLJ
   - Unified import/export + bidirectional sync
 
 - **Deep Link Protocol**
-  - `ccswitch://` protocol registration (all platforms)
+  - `clihub://` protocol registration (all platforms)
   - One-click import provider configs via shared links
   - Security validation + lifecycle integration
 
@@ -124,26 +124,26 @@ Get 10% OFF the GLM CODING PLAN with [this link](https://z.ai/subscribe?ic=8JVLJ
 
 ### Windows Users
 
-Download the latest `CC-Switch-v{version}-Windows.msi` installer or `CC-Switch-v{version}-Windows-Portable.zip` portable version from the [Releases](../../releases) page.
+Download the latest `CLI-Hub-v{version}-Windows.msi` installer or `CLI-Hub-v{version}-Windows-Portable.zip` portable version from the [Releases](../../releases) page.
 
 ### macOS Users
 
 **Method 1: Install via Homebrew (Recommended)**
 
 ```bash
-brew tap farion1231/ccswitch
-brew install --cask cc-switch
+brew tap farion1231/clihub
+brew install --cask cli-hub
 ```
 
 Update:
 
 ```bash
-brew upgrade --cask cc-switch
+brew upgrade --cask cli-hub
 ```
 
 **Method 2: Manual Download**
 
-Download `CC-Switch-v{version}-macOS.zip` from the [Releases](../../releases) page and extract to use.
+Download `CLI-Hub-v{version}-macOS.zip` from the [Releases](../../releases) page and extract to use.
 
 > **Note**: Since the author doesn't have an Apple Developer account, you may see an "unidentified developer" warning on first launch. Please close it first, then go to "System Settings" → "Privacy & Security" → click "Open Anyway", and you'll be able to open it normally afterwards.
 
@@ -152,12 +152,12 @@ Download `CC-Switch-v{version}-macOS.zip` from the [Releases](../../releases) pa
 **Install via paru (Recommended)**
 
 ```bash
-paru -S cc-switch-bin
+paru -S cli-hub-bin
 ```
 
 ### Linux Users
 
-Download the latest `CC-Switch-v{version}-Linux.deb` package or `CC-Switch-v{version}-Linux.AppImage` from the [Releases](../../releases) page.
+Download the latest `CLI-Hub-v{version}-Linux.deb` package or `CLI-Hub-v{version}-Linux.AppImage` from the [Releases](../../releases) page.
 
 ## Quick Start
 
@@ -226,11 +226,11 @@ Download the latest `CC-Switch-v{version}-Linux.deb` package or `CC-Switch-v{ver
 - MCP servers: `~/.gemini/settings.json` → `mcpServers`
 - Tray quick switch: Each provider switch rewrites `~/.gemini/.env`, no need to restart Gemini CLI
 
-**CC Switch Storage**
+**CLI Hub Storage**
 
-- Main config (SSOT): `~/.cc-switch/config.json` (includes providers, MCP, Prompts presets, etc.)
-- Settings: `~/.cc-switch/settings.json`
-- Backups: `~/.cc-switch/backups/` (auto-rotate, keep 10)
+- Main config (SSOT): `~/.cli-hub/config.json` (includes providers, MCP, Prompts presets, etc.)
+- Settings: `~/.cli-hub/settings.json`
+- Backups: `~/.cli-hub/backups/` (auto-rotate, keep 10)
 
 ### Cloud Sync Setup
 
@@ -265,7 +265,7 @@ Download the latest `CC-Switch-v{version}-Linux.deb` package or `CC-Switch-v{ver
 
 **Core Design Patterns**
 
-- **SSOT** (Single Source of Truth): All provider configs stored in `~/.cc-switch/config.json`
+- **SSOT** (Single Source of Truth): All provider configs stored in `~/.cli-hub/config.json`
 - **Dual-way Sync**: Write to live files on switch, backfill from live when editing active provider
 - **Atomic Writes**: Temp file + rename pattern prevents config corruption
 - **Concurrency Safe**: RwLock with scoped guards avoids deadlocks
@@ -435,7 +435,7 @@ Before submitting PRs, please ensure:
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cc-switch&type=Date)](https://www.star-history.com/#farion1231/cc-switch&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cli-hub&type=Date)](https://www.star-history.com/#farion1231/cli-hub&Date)
 
 ## License
 

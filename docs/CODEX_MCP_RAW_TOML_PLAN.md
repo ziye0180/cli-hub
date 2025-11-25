@@ -1203,7 +1203,7 @@ pnpm add @codemirror/lang-toml
 2. **恢复配置**：
    ```bash
    # 迁移时会自动备份为 config.v3.backup.<timestamp>.json
-   cp ~/.cc-switch/config.v3.backup.*.json ~/.cc-switch/config.json
+   cp ~/.cli-hub/config.v3.backup.*.json ~/.cli-hub/config.json
    ```
 
 3. **重启应用**

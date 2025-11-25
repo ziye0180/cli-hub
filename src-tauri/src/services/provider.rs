@@ -336,8 +336,8 @@ impl ProviderService {
     ///
     /// # 写入两处 settings.json 的原因
     ///
-    /// 1. **`~/.cc-switch/settings.json`** (应用级配置):
-    ///    - CC-Switch 应用的全局设置
+    /// 1. **`~/.cli-hub/settings.json`** (应用级配置):
+    ///    - CLI-Hub 应用的全局设置
     ///    - 确保应用知道当前使用的认证类型
     ///    - 用于 UI 显示和其他应用逻辑
     ///
@@ -366,7 +366,7 @@ impl ProviderService {
             return Ok(());
         }
 
-        // 写入应用级别的 settings.json (~/.cc-switch/settings.json)
+        // 写入应用级别的 settings.json (~/.cli-hub/settings.json)
         settings::ensure_security_auth_selected_type(Self::PACKYCODE_SECURITY_SELECTED_TYPE)?;
 
         // 写入 Gemini 目录的 settings.json (~/.gemini/settings.json)
@@ -399,7 +399,7 @@ impl ProviderService {
     /// # OAuth 认证流程
     ///
     /// 1. 用户切换到 Google 官方供应商
-    /// 2. CC-Switch 设置 `selectedType = "oauth-personal"`
+    /// 2. CLI-Hub 设置 `selectedType = "oauth-personal"`
     /// 3. 用户首次使用 Gemini CLI 时，会自动打开浏览器进行 OAuth 登录
     /// 4. 登录成功后，凭证保存在 Gemini 的 credential store 中
     /// 5. 后续请求自动使用保存的凭证
@@ -412,7 +412,7 @@ impl ProviderService {
             return Ok(());
         }
 
-        // 写入应用级别的 settings.json (~/.cc-switch/settings.json)
+        // 写入应用级别的 settings.json (~/.cli-hub/settings.json)
         settings::ensure_security_auth_selected_type(Self::GOOGLE_OAUTH_SECURITY_SELECTED_TYPE)?;
 
         // 写入 Gemini 目录的 settings.json (~/.gemini/settings.json)

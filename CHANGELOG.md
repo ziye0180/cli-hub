@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Gemini configuration directory support** (#255) - Added custom configuration directory option for Gemini in settings
-- **ArchLinux installation support** (#259) - Added AUR installation via `paru -S cc-switch-bin`
+- **ArchLinux installation support** (#259) - Added AUR installation via `paru -S cli-hub-bin`
 
 ### Improved
 
@@ -44,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Google Official (OAuth authentication)
   - PackyCode (partner integration)
   - Custom endpoint support
-- **Deep link support** - Import Gemini providers via `ccswitch://` protocol
+- **Deep link support** - Import Gemini providers via `clihub://` protocol
 - **System tray integration** - Quick-switch Gemini providers from tray menu
 - **Backend modules** - New `gemini_config.rs` (20KB) and `gemini_mcp.rs`
 
@@ -105,9 +105,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - usePromptActions: Business logic hook (152 lines)
 - **Full i18n support** - Complete Chinese/English translations (41+ keys)
 
-#### Deep Link Protocol (ccswitch://)
+#### Deep Link Protocol (clihub://)
 
-- **Protocol registration** - `ccswitch://` URL scheme for one-click imports
+- **Protocol registration** - `clihub://` URL scheme for one-click imports
 - **Provider import** - Import provider configurations from URLs or shared links
 - **Lifecycle integration** - Deep link handling integrated into app startup
 - **Cross-platform support** - Works on Windows, macOS, and Linux
@@ -577,11 +577,11 @@ For users upgrading from v2.x (Electron version):
 - The app will automatically migrate your existing provider configurations
 - Window position and size preferences have been reset to defaults
 
-#### Backup on v1→v2 Migration (cc-switch internal config)
+#### Backup on v1→v2 Migration (cli-hub internal config)
 
-- When the app detects an old v1 config structure at `~/.cc-switch/config.json`, it now creates a timestamped backup before writing the new v2 structure.
-- Backup location: `~/.cc-switch/config.v1.backup.<timestamp>.json`
-- This only concerns cc-switch's own metadata file; your actual provider files under `~/.claude/` and `~/.codex/` are untouched.
+- When the app detects an old v1 config structure at `~/.cli-hub/config.json`, it now creates a timestamped backup before writing the new v2 structure.
+- Backup location: `~/.cli-hub/config.v1.backup.<timestamp>.json`
+- This only concerns cli-hub's own metadata file; your actual provider files under `~/.claude/` and `~/.codex/` are untouched.
 
 ### 🛠️ Development
 
@@ -615,7 +615,7 @@ For users upgrading from v2.x (Electron version):
 - **Runtime auto-migration from v1 to v2 config format has been removed**
   - `MultiAppConfig::load()` no longer automatically migrates v1 configs
   - When a v1 config is detected, the app now returns a clear error with migration instructions
-  - **Migration path**: Install v3.2.x to perform one-time auto-migration, OR manually edit `~/.cc-switch/config.json` to v2 format
+  - **Migration path**: Install v3.2.x to perform one-time auto-migration, OR manually edit `~/.cli-hub/config.json` to v2 format
   - **Rationale**: Separates concerns (load() should be read-only), fail-fast principle, simplifies maintenance
   - Related: `app_config.rs` (v1 detection improved with structural analysis), `app_config_load.rs` (comprehensive test coverage added)
 

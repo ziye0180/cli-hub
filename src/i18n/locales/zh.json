@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "CC Switch",
+    "title": "CLI Hub",
     "description": "Claude Code / Codex / Gemini CLI 全方位辅助工具"
   },
   "common": {
@@ -168,7 +168,7 @@
     "windowBehavior": "窗口行为",
     "windowBehaviorHint": "配置窗口最小化与 Claude 插件联动策略。",
     "launchOnStartup": "开机自启",
-    "launchOnStartupDescription": "随系统启动自动运行 CC Switch",
+    "launchOnStartupDescription": "随系统启动自动运行 CLI Hub",
     "autoLaunchFailed": "设置开机自启失败",
     "minimizeToTray": "关闭时最小化到托盘",
     "minimizeToTrayDescription": "勾选后点击关闭按钮会隐藏到系统托盘，取消则直接退出应用。",
@@ -176,9 +176,9 @@
     "enableClaudePluginIntegrationDescription": "开启后 Vscode Claude Code 插件的供应商将随本软件切换",
     "configDirectoryOverride": "配置目录覆盖（高级）",
     "configDirectoryDescription": "在 WSL 等环境使用 Claude Code 或 Codex 的时候，可手动指定为 WSL 里的配置目录，供应商数据与主环境保持一致。",
-    "appConfigDir": "CC Switch 配置目录",
-    "appConfigDirDescription": "自定义 CC Switch 的配置存储位置（指定到云同步文件夹即可云同步配置）",
-    "browsePlaceholderApp": "例如：C:\\Users\\Administrator\\.cc-switch",
+    "appConfigDir": "CLI Hub 配置目录",
+    "appConfigDirDescription": "自定义 CLI Hub 的配置存储位置（指定到云同步文件夹即可云同步配置）",
+    "browsePlaceholderApp": "例如：C:\\Users\\Administrator\\.cli-hub",
     "claudeConfigDir": "Claude Code 配置目录",
     "claudeConfigDirDescription": "覆盖 Claude 配置目录 (settings.json)，同时会在同级存放 Claude MCP 的 claude.json。",
     "codexConfigDir": "Codex 配置目录",
@@ -207,7 +207,7 @@
     "importFailedError": "导入配置失败：{{message}}",
     "exportFailedError": "导出配置失败:",
     "restartRequired": "需要重启应用",
-    "restartRequiredMessage": "修改 CC Switch 配置目录后需要重启应用才能生效，是否立即重启？",
+    "restartRequiredMessage": "修改 CLI Hub 配置目录后需要重启应用才能生效，是否立即重启？",
     "restartNow": "立即重启",
     "restartLater": "稍后重启",
     "restartFailed": "应用重启失败，请手动关闭后重新打开。",
@@ -260,8 +260,8 @@
     "officialHint": "💡 官方供应商使用浏览器登录，无需配置 API Key",
     "getApiKey": "获取 API Key",
     "partnerPromotion": {
-      "zhipu": "智谱 GLM 是 CC Switch 的官方合作伙伴，使用此链接充值可以获得9折优惠",
-      "packycode": "PackyCode 是 CC Switch 的官方合作伙伴，使用此链接注册并在充值时填写 \"cc-switch\" 优惠码，可以享受9折优惠"
+      "zhipu": "智谱 GLM 是 CLI Hub 的官方合作伙伴，使用此链接充值可以获得9折优惠",
+      "packycode": "PackyCode 是 CLI Hub 的官方合作伙伴，使用此链接注册并在充值时填写 \"cli-hub\" 优惠码，可以享受9折优惠"
     },
     "parameterConfig": "参数配置 - {{name}} *",
     "mainModel": "主模型 (可选)",
@@ -748,7 +748,7 @@
   },
   "deeplink": {
     "confirmImport": "确认导入供应商配置",
-    "confirmImportDescription": "以下配置将导入到 CC Switch",
+    "confirmImportDescription": "以下配置将导入到 CLI Hub",
     "importPrompt": "导入提示词",
     "importPromptDescription": "请确认是否导入此系统提示词",
     "importMcp": "导入 MCP Servers",

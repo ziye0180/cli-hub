@@ -2,13 +2,13 @@
 
 # Claude Code / Codex / Gemini CLI 全方位辅助工具
 
-[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cc-switch/releases)
+[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cli-hub/releases)
 [![Trending](https://img.shields.io/badge/🔥_TypeScript_Trending-Daily%20%7C%20Weekly%20%7C%20Monthly-ff6b6b.svg)](https://github.com/trending/typescript)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cc-switch/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cli-hub/releases)
 [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%202-orange.svg)](https://tauri.app/)
-[![Downloads](https://img.shields.io/endpoint?url=https://api.pinstudios.net/api/badges/downloads/farion1231/cc-switch/total)](https://github.com/farion1231/cc-switch/releases/latest)
+[![Downloads](https://img.shields.io/endpoint?url=https://api.pinstudios.net/api/badges/downloads/farion1231/cli-hub/total)](https://github.com/farion1231/cli-hub/releases/latest)
 
-<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcc-switch | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcli-hub | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 [English](README.md) | 中文 | [更新日志](CHANGELOG.md) | [📋 v3.7.0 发布说明](docs/release-note-v3.7.0-zh.md)
 
@@ -26,14 +26,14 @@
 
 GLM CODING PLAN 是专为AI编码打造的订阅套餐,每月最低仅需20元，即可在十余款主流AI编码工具如 Claude Code、Cline 中畅享智谱旗舰模型 GLM-4.6，为开发者提供顶尖、高速、稳定的编码体验。
 
-CC Switch 已经预设了智谱GLM，只需要填写 key 即可一键导入编程工具。智谱AI为本软件的用户提供了特别优惠，使用[此链接](https://www.bigmodel.cn/claude-code?ic=RRVJPB5SII)购买可以享受九折优惠。
+CLI Hub 已经预设了智谱GLM，只需要填写 key 即可一键导入编程工具。智谱AI为本软件的用户提供了特别优惠，使用[此链接](https://www.bigmodel.cn/claude-code?ic=RRVJPB5SII)购买可以享受九折优惠。
 
 ---
 
 <table>
 <tr>
 <td width="180"><img src="assets/partners/logos/packycode.png" alt="PackyCode" width="150"></td>
-<td>感谢 PackyCode 赞助了本项目！PackyCode 是一家稳定、高效的API中转服务商，提供 Claude Code、Codex、Gemini 等多种中转服务。PackyCode 为本软件的用户提供了特别优惠，使用<a href="https://www.packyapi.com/register?aff=cc-switch">此链接</a>注册并在充值时填写"cc-switch"优惠码，可以享受9折优惠。</td>
+<td>感谢 PackyCode 赞助了本项目！PackyCode 是一家稳定、高效的API中转服务商，提供 Claude Code、Codex、Gemini 等多种中转服务。PackyCode 为本软件的用户提供了特别优惠，使用<a href="https://www.packyapi.com/register?aff=cli-hub">此链接</a>注册并在充值时填写"cli-hub"优惠码，可以享受9折优惠。</td>
 </tr>
 
 <tr>
@@ -82,7 +82,7 @@ CC Switch 已经预设了智谱GLM，只需要填写 key 即可一键导入编�
   - 统一导入/导出 + 双向同步
 
 - **深度链接协议**
-  - `ccswitch://` 协议注册（全平台）
+  - `clihub://` 协议注册（全平台）
   - 通过共享链接一键导入供应商配置
   - 安全验证 + 生命周期集成
 
@@ -124,26 +124,26 @@ CC Switch 已经预设了智谱GLM，只需要填写 key 即可一键导入编�
 
 ### Windows 用户
 
-从 [Releases](../../releases) 页面下载最新版本的 `CC-Switch-v{版本号}-Windows.msi` 安装包或者 `CC-Switch-v{版本号}-Windows-Portable.zip` 绿色版。
+从 [Releases](../../releases) 页面下载最新版本的 `CLI-Hub-v{版本号}-Windows.msi` 安装包或者 `CLI-Hub-v{版本号}-Windows-Portable.zip` 绿色版。
 
 ### macOS 用户
 
 **方式一：通过 Homebrew 安装（推荐）**
 
 ```bash
-brew tap farion1231/ccswitch
-brew install --cask cc-switch
+brew tap farion1231/clihub
+brew install --cask cli-hub
 ```
 
 更新：
 
 ```bash
-brew upgrade --cask cc-switch
+brew upgrade --cask cli-hub
 ```
 
 **方式二：手动下载**
 
-从 [Releases](../../releases) 页面下载 `CC-Switch-v{版本号}-macOS.zip` 解压使用。
+从 [Releases](../../releases) 页面下载 `CLI-Hub-v{版本号}-macOS.zip` 解压使用。
 
 > **注意**：由于作者没有苹果开发者账号，首次打开可能出现"未知开发者"警告，请先关闭，然后前往"系统设置" → "隐私与安全性" → 点击"仍要打开"，之后便可以正常打开
 
@@ -152,12 +152,12 @@ brew upgrade --cask cc-switch
 **通过 paru 安装（推荐）**
 
 ```bash
-paru -S cc-switch-bin
+paru -S cli-hub-bin
 ```
 
 ### Linux 用户
 
-从 [Releases](../../releases) 页面下载最新版本的 `CC-Switch-v{版本号}-Linux.deb` 包或者 `CC-Switch-v{版本号}-Linux.AppImage` 安装包。
+从 [Releases](../../releases) 页面下载最新版本的 `CLI-Hub-v{版本号}-Linux.deb` 包或者 `CLI-Hub-v{版本号}-Linux.AppImage` 安装包。
 
 ## 快速开始
 
@@ -226,11 +226,11 @@ paru -S cc-switch-bin
 - MCP 服务器：`~/.gemini/settings.json` → `mcpServers`
 - 托盘快速切换：每次切换供应商都会重写 `~/.gemini/.env`，无需重启 Gemini CLI 即可生效
 
-**CC Switch 存储**
+**CLI Hub 存储**
 
-- 主配置（SSOT）：`~/.cc-switch/config.json`（包含供应商、MCP、Prompts 预设等）
-- 设置：`~/.cc-switch/settings.json`
-- 备份：`~/.cc-switch/backups/`（自动轮换，保留 10 个）
+- 主配置（SSOT）：`~/.cli-hub/config.json`（包含供应商、MCP、Prompts 预设等）
+- 设置：`~/.cli-hub/settings.json`
+- 备份：`~/.cli-hub/backups/`（自动轮换，保留 10 个）
 
 ### 云同步设置
 
@@ -265,7 +265,7 @@ paru -S cc-switch-bin
 
 **核心设计模式**
 
-- **SSOT**（单一事实源）：所有供应商配置存储在 `~/.cc-switch/config.json`
+- **SSOT**（单一事实源）：所有供应商配置存储在 `~/.cli-hub/config.json`
 - **双向同步**：切换时写入 live 文件，编辑当前供应商时从 live 回填
 - **原子写入**：临时文件 + 重命名模式防止配置损坏
 - **并发安全**：RwLock 与作用域守卫避免死锁
@@ -435,7 +435,7 @@ pnpm test:unit --coverage
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cc-switch&type=Date)](https://www.star-history.com/#farion1231/cc-switch&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cli-hub&type=Date)](https://www.star-history.com/#farion1231/cli-hub&Date)
 
 ## License
 

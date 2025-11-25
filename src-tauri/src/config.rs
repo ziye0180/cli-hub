@@ -62,7 +62,7 @@ pub fn get_claude_settings_path() -> PathBuf {
     settings
 }
 
-/// 获取应用配置目录路径 (~/.cc-switch)
+/// 获取应用配置目录路径 (~/.cli-hub)
 pub fn get_app_config_dir() -> PathBuf {
     if let Some(custom) = crate::app_store::get_app_config_dir_override() {
         return custom;
@@ -70,7 +70,7 @@ pub fn get_app_config_dir() -> PathBuf {
 
     dirs::home_dir()
         .expect("无法获取用户主目录")
-        .join(".cc-switch")
+        .join(".cli-hub")
 }
 
 /// 获取应用配置文件路径

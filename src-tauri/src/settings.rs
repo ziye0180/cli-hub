@@ -94,7 +94,7 @@ impl AppSettings {
         // settings.json 保留用于旧版本迁移和无数据库场景
         dirs::home_dir()
             .expect("无法获取用户主目录")
-            .join(".cc-switch")
+            .join(".cli-hub")
             .join("settings.json")
     }
 

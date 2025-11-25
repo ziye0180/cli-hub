@@ -13,7 +13,7 @@ GEMINI.md
 /.claude
 /.codex
 /.gemini
-/.cc-switch
+/.cli-hub
 /.idea
 /.vscode
 vitest-report.json

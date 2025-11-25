@@ -617,49 +617,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cc-switch"
-version = "3.7.1"
-dependencies = [
- "anyhow",
- "auto-launch",
- "base64 0.22.1",
- "chrono",
- "dirs 5.0.1",
- "futures",
- "indexmap 2.11.4",
- "log",
- "objc2 0.5.2",
- "objc2-app-kit 0.2.2",
- "once_cell",
- "regex",
- "reqwest",
- "rquickjs",
- "rusqlite",
- "serde",
- "serde_json",
- "serde_yaml",
- "serial_test",
- "tauri",
- "tauri-build",
- "tauri-plugin-deep-link",
- "tauri-plugin-dialog",
- "tauri-plugin-log",
- "tauri-plugin-opener",
- "tauri-plugin-process",
- "tauri-plugin-single-instance",
- "tauri-plugin-store",
- "tauri-plugin-updater",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "toml 0.8.2",
- "toml_edit 0.22.27",
- "url",
- "winreg 0.52.0",
- "zip 2.4.2",
-]
-
-[[package]]
 name = "cesu8"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -720,6 +677,49 @@ checksum = "773f3b9af64447d2ce9850330c473515014aa235e6a783b02db81ff39e4a3dad"
 dependencies = [
  "crypto-common",
  "inout",
+]
+
+[[package]]
+name = "cli-hub"
+version = "3.7.1"
+dependencies = [
+ "anyhow",
+ "auto-launch",
+ "base64 0.22.1",
+ "chrono",
+ "dirs 5.0.1",
+ "futures",
+ "indexmap 2.11.4",
+ "log",
+ "objc2 0.5.2",
+ "objc2-app-kit 0.2.2",
+ "once_cell",
+ "regex",
+ "reqwest",
+ "rquickjs",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "serial_test",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-deep-link",
+ "tauri-plugin-dialog",
+ "tauri-plugin-log",
+ "tauri-plugin-opener",
+ "tauri-plugin-process",
+ "tauri-plugin-single-instance",
+ "tauri-plugin-store",
+ "tauri-plugin-updater",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "toml 0.8.2",
+ "toml_edit 0.22.27",
+ "url",
+ "winreg 0.52.0",
+ "zip 2.4.2",
 ]
 
 [[package]]

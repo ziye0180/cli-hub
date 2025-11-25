@@ -1641,7 +1641,7 @@ fn backup_config_before_refactor() -> Result<()> {
 - [react-hook-form 文档](https://react-hook-form.com/)
 - [shadcn/ui 文档](https://ui.shadcn.com/)
 - [Zod 文档](https://zod.dev/)
-- [原始 PR #76](https://github.com/farion1231/cc-switch/pull/76)
+- [原始 PR #76](https://github.com/farion1231/cli-hub/pull/76)
 
 ---
 

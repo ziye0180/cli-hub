@@ -1,13 +1,13 @@
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex, OnceLock};
 
-use cc_switch_lib::{update_settings, AppSettings, AppState, Database, MultiAppConfig};
+use cli_hub_lib::{update_settings, AppSettings, AppState, Database, MultiAppConfig};
 
 /// 为测试设置隔离的 HOME 目录，避免污染真实用户数据。
 pub fn ensure_test_home() -> &'static Path {
     static HOME: OnceLock<PathBuf> = OnceLock::new();
     HOME.get_or_init(|| {
-        let base = std::env::temp_dir().join("cc-switch-test-home");
+        let base = std::env::temp_dir().join("cli-hub-test-home");
         if base.exists() {
             let _ = std::fs::remove_dir_all(&base);
         }
@@ -23,7 +23,7 @@ pub fn ensure_test_home() -> &'static Path {
 /// 清理测试目录中生成的配置文件与缓存。
 pub fn reset_test_fs() {
     let home = ensure_test_home();
-    for sub in [".claude", ".codex", ".cc-switch", ".gemini"] {
+    for sub in [".claude", ".codex", ".cli-hub", ".gemini"] {
         let path = home.join(sub);
         if path.exists() {
             if let Err(err) = std::fs::remove_dir_all(&path) {

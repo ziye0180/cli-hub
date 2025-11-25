@@ -376,7 +376,7 @@ function App() {
               <>
                 <div className="flex items-center gap-2">
                   <a
-                    href="https://github.com/farion1231/cc-switch"
+                    href="https://github.com/farion1231/cli-hub"
                     target="_blank"
                     rel="noreferrer"
                     className="text-xl font-semibold text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"

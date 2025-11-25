@@ -122,7 +122,7 @@ enum JsonMigrationMode {
 
 /// 解析 JSON→DB 迁移模式：默认关闭，支持 dryrun/模拟演练
 fn json_migration_mode() -> JsonMigrationMode {
-    match std::env::var("CC_SWITCH_ENABLE_JSON_DB_MIGRATION") {
+    match std::env::var("CLI_HUB_ENABLE_JSON_DB_MIGRATION") {
         Ok(val) => match val.trim().to_ascii_lowercase().as_str() {
             "1" | "true" | "yes" | "on" => JsonMigrationMode::Enabled,
             "dryrun" | "dry-run" | "simulate" | "sim" => JsonMigrationMode::DryRun,
@@ -314,7 +314,7 @@ fn handle_tray_menu_event(app: &tauri::AppHandle, event_id: &str) {
     }
 }
 
-/// 统一处理 ccswitch:// 深链接 URL
+/// 统一处理 clihub:// 深链接 URL
 ///
 /// - 解析 URL
 /// - 向前端发射 `deeplink-import` / `deeplink-error` 事件
@@ -325,7 +325,7 @@ fn handle_deeplink_url(
     focus_main_window: bool,
     source: &str,
 ) -> bool {
-    if !url_str.starts_with("ccswitch://") {
+    if !url_str.starts_with("clihub://") {
         return false;
     }
 
@@ -558,7 +558,7 @@ pub fn run() {
 
             // 初始化数据库
             let app_config_dir = crate::config::get_app_config_dir();
-            let db_path = app_config_dir.join("cc-switch.db");
+            let db_path = app_config_dir.join("cli-hub.db");
             let json_path = app_config_dir.join("config.json");
 
             // Check if config.json→SQLite migration needed (feature gated, disabled by default)
@@ -581,7 +581,7 @@ pub fn run() {
                     JsonMigrationMode::Disabled => {
                         log::warn!(
                             "Detected config.json but migration is disabled by default. \
-                             Set CC_SWITCH_ENABLE_JSON_DB_MIGRATION=1 to migrate, or =dryrun to validate first."
+                             Set CLI_HUB_ENABLE_JSON_DB_MIGRATION=1 to migrate, or =dryrun to validate first."
                         );
                     }
                     JsonMigrationMode::DryRun => {
@@ -760,7 +760,7 @@ pub fn run() {
                         log::info!("  URL[{i}]: {url_str}");
 
                         if handle_deeplink_url(&app_handle, url_str, true, "on_open_url") {
-                            break; // Process only first ccswitch:// URL
+                            break; // Process only first clihub:// URL
                         }
                     }
                 }
@@ -924,13 +924,13 @@ pub fn run() {
                         apply_tray_policy(app_handle, true);
                     }
                 }
-                // 处理通过自定义 URL 协议触发的打开事件（例如 ccswitch://...）
+                // 处理通过自定义 URL 协议触发的打开事件（例如 clihub://...）
                 RunEvent::Opened { urls } => {
                     if let Some(url) = urls.first() {
                         let url_str = url.to_string();
                         log::info!("RunEvent::Opened with URL: {url_str}");
 
-                        if url_str.starts_with("ccswitch://") {
+                        if url_str.starts_with("clihub://") {
                             // 解析并广播深链接事件，复用与 single_instance 相同的逻辑
                             match crate::deeplink::parse_deeplink_url(&url_str) {
                                 Ok(request) => {

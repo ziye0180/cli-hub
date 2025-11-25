@@ -37,7 +37,7 @@ export function DirectorySettings({
 
   return (
     <>
-      {/* CC Switch 配置目录 - 独立区块 */}
+      {/* CLI Hub 配置目录 - 独立区块 */}
       <section className="space-y-4">
         <header className="space-y-1">
           <h3 className="text-sm font-medium">{t("settings.appConfigDir")}</h3>

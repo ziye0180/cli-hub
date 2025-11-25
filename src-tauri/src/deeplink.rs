@@ -1,8 +1,8 @@
 use crate::app_config::{McpApps, McpServer};
-/// Deep link import functionality for CC Switch
+/// Deep link import functionality for CLI Hub
 ///
-/// This module implements the ccswitch:// protocol for importing provider configurations
-/// via deep links. See docs/ccswitch-deeplink-design.md for detailed design.
+/// This module implements the clihub:// protocol for importing provider configurations
+/// via deep links. See docs/clihub-deeplink-design.md for detailed design.
 use crate::error::AppError;
 use crate::prompt::Prompt;
 use crate::provider::Provider;
@@ -19,7 +19,7 @@ use std::str::FromStr;
 use url::Url;
 
 /// Deep link import request model
-/// Represents a parsed ccswitch:// URL ready for processing
+/// Represents a parsed clihub:// URL ready for processing
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DeepLinkImportRequest {
@@ -129,10 +129,10 @@ pub struct McpImportError {
     pub error: String,
 }
 
-/// Parse a ccswitch:// URL into a DeepLinkImportRequest
+/// Parse a clihub:// URL into a DeepLinkImportRequest
 ///
 /// Expected format:
-/// ccswitch://v1/import?resource={type}&...
+/// clihub://v1/import?resource={type}&...
 pub fn parse_deeplink_url(url_str: &str) -> Result<DeepLinkImportRequest, AppError> {
     // Parse URL
     let url = Url::parse(url_str)
@@ -140,9 +140,9 @@ pub fn parse_deeplink_url(url_str: &str) -> Result<DeepLinkImportRequest, AppErr
 
     // Validate scheme
     let scheme = url.scheme();
-    if scheme != "ccswitch" {
+    if scheme != "clihub" {
         return Err(AppError::InvalidInput(format!(
-            "Invalid scheme: expected 'ccswitch', got '{scheme}'"
+            "Invalid scheme: expected 'clihub', got '{scheme}'"
         )));
     }
 
@@ -1043,7 +1043,7 @@ mod tests {
 
     #[test]
     fn test_parse_valid_claude_deeplink() {
-        let url = "ccswitch://v1/import?resource=provider&app=claude&name=Test%20Provider&homepage=https%3A%2F%2Fexample.com&endpoint=https%3A%2F%2Fapi.example.com&apiKey=sk-test-123&icon=claude";
+        let url = "clihub://v1/import?resource=provider&app=claude&name=Test%20Provider&homepage=https%3A%2F%2Fexample.com&endpoint=https%3A%2F%2Fapi.example.com&apiKey=sk-test-123&icon=claude";
 
         let request = parse_deeplink_url(url).unwrap();
 
@@ -1062,7 +1062,7 @@ mod tests {
 
     #[test]
     fn test_parse_deeplink_with_notes() {
-        let url = "ccswitch://v1/import?resource=provider&app=codex&name=Codex&homepage=https%3A%2F%2Fcodex.com&endpoint=https%3A%2F%2Fapi.codex.com&apiKey=key123&notes=Test%20notes";
+        let url = "clihub://v1/import?resource=provider&app=codex&name=Codex&homepage=https%3A%2F%2Fcodex.com&endpoint=https%3A%2F%2Fapi.codex.com&apiKey=key123&notes=Test%20notes";
 
         let request = parse_deeplink_url(url).unwrap();
 
@@ -1080,7 +1080,7 @@ mod tests {
 
     #[test]
     fn test_parse_unsupported_version() {
-        let url = "ccswitch://v2/import?resource=provider&app=claude&name=Test";
+        let url = "clihub://v2/import?resource=provider&app=claude&name=Test";
 
         let result = parse_deeplink_url(url);
         assert!(result.is_err());
@@ -1093,7 +1093,7 @@ mod tests {
     #[test]
     fn test_parse_missing_required_field() {
         // Name is still required even in v3.8+ (only homepage/endpoint/apiKey are optional)
-        let url = "ccswitch://v1/import?resource=provider&app=claude";
+        let url = "clihub://v1/import?resource=provider&app=claude";
 
         let result = parse_deeplink_url(url);
         assert!(result.is_err());
@@ -1313,7 +1313,7 @@ mod tests {
 
     #[test]
     fn test_import_prompt_allows_space_in_base64_content() {
-        let url = "ccswitch://v1/import?resource=prompt&app=codex&name=PromptPlus&content=Pj4+";
+        let url = "clihub://v1/import?resource=prompt&app=codex&name=PromptPlus&content=Pj4+";
         let request = parse_deeplink_url(url).unwrap();
 
         // URL 解码后 content 中的 "+" 会变成空格，确保解码逻辑可以恢复
@@ -1648,7 +1648,7 @@ mod tests_imports {
         let content = "Hello World";
         let content_b64 = BASE64_STANDARD.encode(content);
         let url = format!(
-            "ccswitch://v1/import?resource=prompt&app=claude&name=test&content={}&description=desc&enabled=true",
+            "clihub://v1/import?resource=prompt&app=claude&name=test&content={}&description=desc&enabled=true",
             content_b64
         );
 
@@ -1666,7 +1666,7 @@ mod tests_imports {
         let config = r#"{"mcpServers":{"test":{"command":"echo"}}}"#;
         let config_b64 = BASE64_STANDARD.encode(config);
         let url = format!(
-            "ccswitch://v1/import?resource=mcp&apps=claude,codex&config={}&enabled=true",
+            "clihub://v1/import?resource=mcp&apps=claude,codex&config={}&enabled=true",
             config_b64
         );
 
@@ -1679,7 +1679,7 @@ mod tests_imports {
 
     #[test]
     fn test_parse_skill_deeplink() {
-        let url = "ccswitch://v1/import?resource=skill&repo=owner/repo&directory=skills&branch=dev&skills_path=src";
+        let url = "clihub://v1/import?resource=skill&repo=owner/repo&directory=skills&branch=dev&skills_path=src";
         let request = parse_deeplink_url(&url).unwrap();
 
         assert_eq!(request.resource, "skill");
