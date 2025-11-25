@@ -1,4 +1,4 @@
-# CC Switch Rust 后端重构方案
+# CLI Hub Rust 后端重构方案
 
 ## 目录
 - [背景与现状](#背景与现状)

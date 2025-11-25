@@ -381,7 +381,7 @@ function App() {
                     rel="noreferrer"
                     className="text-xl font-semibold text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
                   >
-                    CC Switch
+                    CLI Hub
                   </a>
                   <div className="h-5 w-[1px] bg-black/10 dark:bg-white/15" />
                   <Button

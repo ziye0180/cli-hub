@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to CC Switch will be documented in this file.
+All notable changes to CLI Hub will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -394,9 +394,9 @@ v3.7.0 represents a major evolution from "Provider Switcher" to **"All-in-One AI
 - Refined UI/UX with better spacing, icons, and visual feedback
 - Enhanced tray menu functionality and responsiveness
 - **Standardized release artifact naming** - All platform releases now use consistent version-tagged filenames:
-  - macOS: `CC-Switch-v{version}-macOS.tar.gz` / `.zip`
-  - Windows: `CC-Switch-v{version}-Windows.msi` / `-Portable.zip`
-  - Linux: `CC-Switch-v{version}-Linux.AppImage` / `.deb`
+  - macOS: `CLI-Hub-v{version}-macOS.tar.gz` / `.zip`
+  - Windows: `CLI-Hub-v{version}-Windows.msi` / `-Portable.zip`
+  - Linux: `CLI-Hub-v{version}-Linux.AppImage` / `.deb`
 
 ### 🐛 Bug Fixes
 
