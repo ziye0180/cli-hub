@@ -1,14 +1,13 @@
 <div align="center">
 
-# All-in-One Assistant for Claude Code, Codex & Gemini CLI
+# CLI Hub
 
-[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cli-hub/releases)
-[![Trending](https://img.shields.io/badge/🔥_TypeScript_Trending-Daily%20%7C%20Weekly%20%7C%20Monthly-ff6b6b.svg)](https://github.com/trending/typescript)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cli-hub/releases)
+## All-in-One Management Platform for AI CLI Tools
+
+[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/ziye0180/cli-hub/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/ziye0180/cli-hub/releases)
 [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%202-orange.svg)](https://tauri.app/)
-[![Downloads](https://img.shields.io/endpoint?url=https://api.pinstudios.net/api/badges/downloads/farion1231/cli-hub/total)](https://github.com/farion1231/cli-hub/releases/latest)
-
-<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcli-hub | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 English | [中文](README_ZH.md) | [Changelog](CHANGELOG.md)
 
@@ -51,61 +50,17 @@ Get 10% OFF the GLM CODING PLAN with [this link](https://z.ai/subscribe?ic=8JVLJ
 
 ## Features
 
-### Current Version: v3.7.0 | [Full Changelog](CHANGELOG.md) | [📋 Release Notes](docs/release-note-v3.7.0-en.md)
-
-**v3.7.0 Major Update (2025-11-19)**
-
-**Six Core Features, 18,000+ Lines of New Code**
-
-- **Gemini CLI Integration**
-  - Third supported AI CLI (Claude Code / Codex / Gemini)
-  - Dual-file configuration support (`.env` + `settings.json`)
-  - Complete MCP server management
-  - Presets: Google Official (OAuth) / PackyCode / Custom
-
-- **Claude Skills Management System**
-  - Auto-scan skills from GitHub repositories (3 pre-configured curated repos)
-  - One-click install/uninstall to `~/.claude/skills/`
-  - Custom repository support + subdirectory scanning
-  - Complete lifecycle management (discover/install/update)
-
-- **Prompts Management System**
-  - Multi-preset system prompt management (unlimited presets, quick switching)
-  - Cross-app support (Claude: `CLAUDE.md` / Codex: `AGENTS.md` / Gemini: `GEMINI.md`)
-  - Markdown editor (CodeMirror 6 + real-time preview)
-  - Smart backfill protection, preserves manual modifications
-
-- **MCP v3.7.0 Unified Architecture**
-  - Single panel manages MCP servers across three applications
-  - New SSE (Server-Sent Events) transport type
-  - Smart JSON parser + Codex TOML format auto-correction
-  - Unified import/export + bidirectional sync
-
-- **Deep Link Protocol**
-  - `clihub://` protocol registration (all platforms)
-  - One-click import provider configs via shared links
-  - Security validation + lifecycle integration
-
-- **Environment Variable Conflict Detection**
-  - Auto-detect cross-app configuration conflicts (Claude/Codex/Gemini/MCP)
-  - Visual conflict indicators + resolution suggestions
-  - Override warnings + backup before changes
-
 **Core Capabilities**
 
-- **Provider Management**: One-click switching between Claude Code, Codex, and Gemini API configurations
-- **Speed Testing**: Measure API endpoint latency with visual quality indicators
-- **Import/Export**: Backup and restore configs with auto-rotation (keep 10 most recent)
-- **i18n Support**: Complete Chinese/English localization (UI, errors, tray)
-- **Claude Plugin Sync**: One-click apply/restore Claude plugin configurations
-
-**v3.6 Highlights**
-
-- Provider duplication & drag-and-drop sorting
-- Multi-endpoint management & custom config directory (cloud sync ready)
-- Granular model configuration (4-tier: Haiku/Sonnet/Opus/Custom)
-- WSL environment support with auto-sync on directory change
-- 100% hooks test coverage & complete architecture refactoring
+- **🔄 Provider Management**: One-click switching between Claude Code, Codex, and Gemini API configurations
+- **⚡ Speed Testing**: Measure API endpoint latency with visual quality indicators
+- **🔌 MCP Server Management**: Unified management for MCP servers across three CLI tools
+- **🛠️ Skills Management**: Discover, install and manage Claude Skills from GitHub repositories
+- **📝 Prompts Management**: Multi-preset system prompt management with Markdown editor
+- **🔗 Deep Link Protocol**: One-click import provider configs via `clihub://` shared links
+- **💾 Import/Export**: Backup and restore configs with auto-rotation (keep 10 most recent)
+- **🌐 i18n Support**: Complete Chinese/English localization (UI, errors, tray)
+- **☁️ Cloud Sync**: Custom config directory for cross-device synchronization
 
 **System Features**
 
@@ -435,7 +390,7 @@ Before submitting PRs, please ensure:
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cli-hub&type=Date)](https://www.star-history.com/#farion1231/cli-hub&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=ziye0180/cli-hub&type=Date)](https://www.star-history.com/#ziye0180/cli-hub&Date)
 
 ## License
 

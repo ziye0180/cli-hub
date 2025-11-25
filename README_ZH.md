@@ -1,16 +1,15 @@
 <div align="center">
 
-# Claude Code / Codex / Gemini CLI 全方位辅助工具
+# CLI Hub
 
-[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cli-hub/releases)
-[![Trending](https://img.shields.io/badge/🔥_TypeScript_Trending-Daily%20%7C%20Weekly%20%7C%20Monthly-ff6b6b.svg)](https://github.com/trending/typescript)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cli-hub/releases)
+## AI CLI 工具一体化管理平台
+
+[![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/ziye0180/cli-hub/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/ziye0180/cli-hub/releases)
 [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%202-orange.svg)](https://tauri.app/)
-[![Downloads](https://img.shields.io/endpoint?url=https://api.pinstudios.net/api/badges/downloads/farion1231/cli-hub/total)](https://github.com/farion1231/cli-hub/releases/latest)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcli-hub | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[English](README.md) | 中文 | [更新日志](CHANGELOG.md) | [📋 v3.7.0 发布说明](docs/release-note-v3.7.0-zh.md)
+[English](README.md) | 中文 | [更新日志](CHANGELOG.md)
 
 **从供应商切换器到 AI CLI 一体化管理平台**
 
@@ -51,61 +50,17 @@ CLI Hub 已经预设了智谱GLM，只需要填写 key 即可一键导入编程�
 
 ## 功能特性
 
-### 当前版本：v3.7.0 | [完整更新日志](CHANGELOG.md)
-
-**v3.7.0 重大更新（2025-11-19）**
-
-**六大核心功能，18,000+ 行新增代码**
-
-- **Gemini CLI 集成**
-  - 第三个支持的 AI CLI（Claude Code / Codex / Gemini）
-  - 双文件配置支持（`.env` + `settings.json`）
-  - 完整 MCP 服务器管理
-  - 预设：Google Official (OAuth) / PackyCode / 自定义
-
-- **Claude Skills 管理系统**
-  - 从 GitHub 仓库自动扫描技能（预配置 3 个精选仓库）
-  - 一键安装/卸载到 `~/.claude/skills/`
-  - 自定义仓库支持 + 子目录扫描
-  - 完整生命周期管理（发现/安装/更新）
-
-- **Prompts 管理系统**
-  - 多预设系统提示词管理（无限数量，快速切换）
-  - 跨应用支持（Claude: `CLAUDE.md` / Codex: `AGENTS.md` / Gemini: `GEMINI.md`）
-  - Markdown 编辑器（CodeMirror 6 + 实时预览）
-  - 智能回填保护，保留手动修改
-
-- **MCP v3.7.0 统一架构**
-  - 单一面板管理三个应用的 MCP 服务器
-  - 新增 SSE (Server-Sent Events) 传输类型
-  - 智能 JSON 解析器 + Codex TOML 格式自动修正
-  - 统一导入/导出 + 双向同步
-
-- **深度链接协议**
-  - `clihub://` 协议注册（全平台）
-  - 通过共享链接一键导入供应商配置
-  - 安全验证 + 生命周期集成
-
-- **环境变量冲突检测**
-  - 自动检测跨应用配置冲突（Claude/Codex/Gemini/MCP）
-  - 可视化冲突指示器 + 解决建议
-  - 覆盖警告 + 更改前备份
-
 **核心功能**
 
-- **供应商管理**：一键切换 Claude Code、Codex 与 Gemini 的 API 配置
-- **速度测试**：测量 API 端点延迟，可视化连接质量指示器
-- **导入导出**：备份和恢复配置，自动轮换（保留最近 10 个）
-- **国际化支持**：完整的中英文本地化（UI、错误、托盘）
-- **Claude 插件同步**：一键应用或恢复 Claude 插件配置
-
-**v3.6 亮点**
-
-- 供应商复制 & 拖拽排序
-- 多端点管理 & 自定义配置目录（支持云同步）
-- 细粒度模型配置（四层：Haiku/Sonnet/Opus/自定义）
-- WSL 环境支持，配置目录切换自动同步
-- 100% hooks 测试覆盖 & 完整架构重构
+- **🔄 供应商管理**：一键切换 Claude Code、Codex 与 Gemini 的 API 配置
+- **⚡ 速度测试**：测量 API 端点延迟，可视化连接质量指示器
+- **🔌 MCP 服务器管理**：统一管理三个 CLI 工具的 MCP 服务器
+- **🛠️ Skills 管理**：从 GitHub 仓库发现、安装和管理 Claude Skills
+- **📝 Prompts 管理**：多预设系统提示词管理，支持 Markdown 编辑
+- **🔗 深度链接协议**：通过 `clihub://` 共享链接一键导入供应商配置
+- **💾 导入导出**：备份和恢复配置，自动轮换（保留最近 10 个）
+- **🌐 国际化支持**：完整的中英文本地化（UI、错误、托盘）
+- **☁️ 云同步**：自定义配置目录，支持跨设备同步
 
 **系统功能**
 
@@ -435,7 +390,7 @@ pnpm test:unit --coverage
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cli-hub&type=Date)](https://www.star-history.com/#farion1231/cli-hub&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=ziye0180/cli-hub&type=Date)](https://www.star-history.com/#ziye0180/cli-hub&Date)
 
 ## License
 
