@@ -59,7 +59,7 @@
   },
   "provider": {
     "noProviders": "No providers added yet",
-    "noProvidersDescription": "Click the \"Add Provider\" button in the top right to configure your first API provider",
+    "noProvidersDescription": "Click the \"Add Provider\" button in the top right to get started",
     "currentlyUsing": "Currently Using",
     "enable": "Enable",
     "inUse": "In Use",
@@ -664,6 +664,10 @@
     "error": {
       "noSelection": "Please select environment variables to delete"
     }
+  },
+  "agents": {
+    "manage": "Agents",
+    "title": "Claude Agents Management"
   },
   "skills": {
     "manage": "Skills",

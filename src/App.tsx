@@ -57,8 +57,6 @@ function App() {
   const promptPanelRef = useRef<any>(null);
   const mcpPanelRef = useRef<any>(null);
   const skillsPageRef = useRef<any>(null);
-  const addActionButtonClass =
-    "bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40 rounded-full w-8 h-8";
 
   const { data, isLoading, refetch } = useProvidersQuery(activeApp);
   const providers = useMemo(() => data?.providers ?? {}, [data]);
@@ -281,7 +279,7 @@ function App() {
         return <AgentsPanel onOpenChange={() => setCurrentView("providers")} />;
       default:
         return (
-          <div className="mx-auto max-w-[56rem] px-6 space-y-4">
+          <div className="mx-auto max-w-[56rem] px-6 mt-4 space-y-4">
             <ProviderList
               providers={providers}
               currentProviderId={currentProviderId}
@@ -293,7 +291,6 @@ function App() {
               onDuplicate={handleDuplicateProvider}
               onConfigureUsage={setUsageProvider}
               onOpenWebsite={handleOpenWebsite}
-              onCreate={() => setIsAddOpen(true)}
             />
           </div>
         );
@@ -376,7 +373,7 @@ function App() {
               <>
                 <div className="flex items-center gap-2">
                   <a
-                    href="https://github.com/farion1231/cli-hub"
+                    href="https://github.com/ziye0180/cli-hub"
                     target="_blank"
                     rel="noreferrer"
                     className="text-xl font-semibold text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
@@ -405,22 +402,22 @@ function App() {
           >
             {currentView === "prompts" && (
               <Button
-                size="icon"
                 onClick={() => promptPanelRef.current?.openAdd()}
-                className={addActionButtonClass}
+                className="bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40"
                 title={t("prompts.add")}
               >
-                <Plus className="h-5 w-5" />
+                <Plus className="h-4 w-4 mr-1.5" />
+                {t("prompts.add")}
               </Button>
             )}
             {currentView === "mcp" && (
               <Button
-                size="icon"
                 onClick={() => mcpPanelRef.current?.openAdd()}
-                className={addActionButtonClass}
+                className="bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40"
                 title={t("mcp.unifiedPanel.addServer")}
               >
-                <Plus className="h-5 w-5" />
+                <Plus className="h-4 w-4 mr-1.5" />
+                {t("mcp.unifiedPanel.addServer")}
               </Button>
             )}
             {currentView === "skills" && (
@@ -460,18 +457,20 @@ function App() {
                     title={t("prompts.manage")}
                   >
                     <Book className="h-4 w-4" />
+                    <span className="ml-1.5">{t("prompts.manage")}</span>
                   </Button>
-                  {isClaudeApp && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setCurrentView("skills")}
-                      className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
-                      title={t("skills.manage")}
-                    >
-                      <Wrench className="h-4 w-4" />
-                    </Button>
-                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setCurrentView("skills")}
+                    className={`text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 ${!isClaudeApp ? "opacity-0 pointer-events-none" : ""}`}
+                    title={t("skills.manage")}
+                    disabled={!isClaudeApp}
+                    tabIndex={!isClaudeApp ? -1 : undefined}
+                  >
+                    <Wrench className="h-4 w-4" />
+                    <span className="ml-1.5">{t("skills.manage")}</span>
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -480,26 +479,28 @@ function App() {
                     title="MCP"
                   >
                     <Server className="h-4 w-4" />
+                    <span className="ml-1.5">MCP</span>
                   </Button>
-                  {isClaudeApp && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setCurrentView("agents")}
-                      className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
-                      title="Agents"
-                    >
-                      <Bot className="h-4 w-4" />
-                    </Button>
-                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setCurrentView("agents")}
+                    className={`text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 ${!isClaudeApp ? "opacity-0 pointer-events-none" : ""}`}
+                    title={t("agents.manage")}
+                    disabled={!isClaudeApp}
+                    tabIndex={!isClaudeApp ? -1 : undefined}
+                  >
+                    <Bot className="h-4 w-4" />
+                    <span className="ml-1.5">{t("agents.manage")}</span>
+                  </Button>
                 </div>
 
                 <Button
                   onClick={() => setIsAddOpen(true)}
-                  size="icon"
-                  className={`ml-2 ${addActionButtonClass}`}
+                  className="ml-2 bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40"
                 >
-                  <Plus className="h-5 w-5" />
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  {t("provider.addProvider")}
                 </Button>
               </>
             )}
@@ -509,7 +510,7 @@ function App() {
 
       <main
         className={`flex-1 overflow-y-auto pb-12 animate-fade-in scroll-overlay ${
-          currentView === "providers" ? "pt-24" : "pt-20"
+          currentView === "providers" ? "pt-32" : "pt-24"
         }`}
         style={{ overflowX: "hidden" }}
       >

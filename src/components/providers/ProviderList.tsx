@@ -22,7 +22,6 @@ interface ProviderListProps {
   onDuplicate: (provider: Provider) => void;
   onConfigureUsage?: (provider: Provider) => void;
   onOpenWebsite: (url: string) => void;
-  onCreate?: () => void;
   isLoading?: boolean;
 }
 
@@ -36,7 +35,6 @@ export function ProviderList({
   onDuplicate,
   onConfigureUsage,
   onOpenWebsite,
-  onCreate,
   isLoading = false,
 }: ProviderListProps) {
   const { sortedProviders, sensors, handleDragEnd } = useDragSort(
@@ -58,7 +56,7 @@ export function ProviderList({
   }
 
   if (sortedProviders.length === 0) {
-    return <ProviderEmptyState onCreate={onCreate} />;
+    return <ProviderEmptyState />;
   }
 
   return (

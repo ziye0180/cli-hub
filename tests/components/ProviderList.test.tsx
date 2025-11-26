@@ -135,8 +135,7 @@ describe("ProviderList Component", () => {
     expect(placeholders).toHaveLength(3);
   });
 
-  it("should show empty state and trigger create callback when no providers exist", () => {
-    const handleCreate = vi.fn();
+  it("should show empty state when no providers exist", () => {
     useDragSortMock.mockReturnValueOnce({
       sortedProviders: [],
       sensors: [],
@@ -153,16 +152,10 @@ describe("ProviderList Component", () => {
         onDelete={vi.fn()}
         onDuplicate={vi.fn()}
         onOpenWebsite={vi.fn()}
-        onCreate={handleCreate}
       />,
     );
 
-    const addButton = screen.getByRole("button", {
-      name: "provider.addProvider",
-    });
-    fireEvent.click(addButton);
-
-    expect(handleCreate).toHaveBeenCalledTimes(1);
+    expect(screen.getByText("provider.noProviders")).toBeInTheDocument();
   });
 
   it("should render in order returned by useDragSort and pass through action callbacks", () => {

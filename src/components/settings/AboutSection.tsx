@@ -64,13 +64,13 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
       if (!displayVersion) {
         await settingsApi.openExternal(
-          "https://github.com/farion1231/cli-hub/releases",
+          "https://github.com/ziye0180/cli-hub/releases",
         );
         return;
       }
 
       await settingsApi.openExternal(
-        `https://github.com/farion1231/cli-hub/releases/tag/${displayVersion}`,
+        `https://github.com/ziye0180/cli-hub/releases/tag/${displayVersion}`,
       );
     } catch (error) {
       console.error("[AboutSection] Failed to open release notes", error);

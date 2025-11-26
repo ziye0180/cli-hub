@@ -1,12 +1,7 @@
 import { Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/ui/button";
 
-interface ProviderEmptyStateProps {
-  onCreate?: () => void;
-}
-
-export function ProviderEmptyState({ onCreate }: ProviderEmptyStateProps) {
+export function ProviderEmptyState() {
   const { t } = useTranslation();
 
   return (
@@ -18,11 +13,6 @@ export function ProviderEmptyState({ onCreate }: ProviderEmptyStateProps) {
       <p className="mt-2 max-w-sm text-sm text-muted-foreground">
         {t("provider.noProvidersDescription")}
       </p>
-      {onCreate && (
-        <Button className="mt-6" onClick={onCreate}>
-          {t("provider.addProvider")}
-        </Button>
-      )}
     </div>
   );
 }
