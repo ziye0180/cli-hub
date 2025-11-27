@@ -262,10 +262,12 @@ impl ProviderService {
         .await
     }
 
+    #[allow(dead_code)]
     pub(crate) fn ensure_packycode_security_flag(provider: &Provider) -> Result<(), AppError> {
         GeminiAuthDetector::ensure_packycode_security_flag(provider)
     }
 
+    #[allow(dead_code)]
     pub(crate) fn ensure_google_oauth_security_flag(provider: &Provider) -> Result<(), AppError> {
         GeminiAuthDetector::ensure_google_oauth_security_flag(provider)
     }
@@ -274,6 +276,7 @@ impl ProviderService {
         LiveConfigSync::write_gemini_live(provider)
     }
 
+    #[allow(dead_code)]
     fn validate_provider_settings(app_type: &AppType, provider: &Provider) -> Result<(), AppError> {
         ProviderValidator::validate_provider_settings(app_type, provider)
     }

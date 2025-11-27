@@ -7,10 +7,6 @@ mod migration;
 mod schema;
 pub mod dao;
 
-pub use backup::*;
-pub use migration::*;
-pub use schema::*;
-
 /// Safe JSON serialization helper
 pub(crate) fn to_json_string<T: serde::Serialize>(value: &T) -> Result<String, AppError> {
     serde_json::to_string(value)
