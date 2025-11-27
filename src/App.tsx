@@ -1,63 +1,58 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import {
-  Plus,
-  Settings,
-  ArrowLeft,
-  Bot,
-  Book,
-  Wrench,
-  Server,
-  RefreshCw,
-} from "lucide-react";
-import type { Provider } from "@/types";
-import type { EnvConflict } from "@/types/env";
-import { useProvidersQuery } from "@/lib/query";
 import {
   providersApi,
   settingsApi,
   type AppId,
   type ProviderSwitchEvent,
 } from "@/lib/api";
-import { checkAllEnvConflicts, checkEnvConflicts } from "@/lib/api/env";
+import { useProvidersQuery } from "@/lib/query";
+import type { Provider } from "@/types";
 import { useProviderActions } from "@/hooks/useProviderActions";
 import { extractErrorMessage } from "@/utils/errorUtils";
-import { AppSwitcher } from "@/components/AppSwitcher";
-import { ProviderList } from "@/components/providers/ProviderList";
-import { AddProviderDialog } from "@/components/providers/AddProviderDialog";
-import { EditProviderDialog } from "@/components/providers/EditProviderDialog";
-import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { SettingsPage } from "@/components/settings/SettingsPage";
 import { UpdateBadge } from "@/components/UpdateBadge";
-import { EnvWarningBanner } from "@/components/env/EnvWarningBanner";
-import UsageScriptModal from "@/components/UsageScriptModal";
-import UnifiedMcpPanel from "@/components/mcp/UnifiedMcpPanel";
-import PromptPanel from "@/components/prompts/PromptPanel";
-import { SkillsPage } from "@/components/skills/SkillsPage";
-import { DeepLinkImportDialog } from "@/components/DeepLinkImportDialog";
-import { AgentsPanel } from "@/components/agents/AgentsPanel";
-import { Button } from "@/components/ui/button";
+import { AppShell } from "@/app/AppShell";
+import { AppHeader } from "@/app/AppHeader";
+import { ViewActions } from "@/app/ViewActions";
+import { AppContent } from "@/app/AppContent";
+import { EnvConflictBanner } from "@/app/EnvConflictBanner";
+import { ProvidersModals } from "@/app/modals/ProvidersModals";
+import { useEnvConflicts } from "@/app/hooks/useEnvConflicts";
+import type { View } from "@/app/types";
 
-type View = "providers" | "settings" | "prompts" | "skills" | "mcp" | "agents";
-
+/**
+ * App 入口
+ * 使命：保留核心状态与业务动作，将 UI 分支和副作用拆分到独立组件/Hook，
+ * 让文件保持可读、可维护，同时保持功能不变。
+ */
 function App() {
   const { t } = useTranslation();
 
+  // -------------------- 视图与应用状态 --------------------
   const [activeApp, setActiveApp] = useState<AppId>("claude");
   const [currentView, setCurrentView] = useState<View>("providers");
   const [isAddOpen, setIsAddOpen] = useState(false);
 
+  // -------------------- Provider 相关状态 --------------------
   const [editingProvider, setEditingProvider] = useState<Provider | null>(null);
   const [usageProvider, setUsageProvider] = useState<Provider | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Provider | null>(null);
-  const [envConflicts, setEnvConflicts] = useState<EnvConflict[]>([]);
-  const [showEnvBanner, setShowEnvBanner] = useState(false);
 
+  // -------------------- Env 冲突状态通过 Hook 管理 --------------------
+  const {
+    envConflicts,
+    showEnvBanner,
+    handleDismissBanner,
+    handleRecheckAfterDelete,
+  } = useEnvConflicts(activeApp);
+
+  // -------------------- 引用，供子组件触发内部方法 --------------------
   const promptPanelRef = useRef<any>(null);
   const mcpPanelRef = useRef<any>(null);
   const skillsPageRef = useRef<any>(null);
 
+  // -------------------- 数据获取 --------------------
   const { data, isLoading, refetch } = useProvidersQuery(activeApp);
   const providers = useMemo(() => data?.providers ?? {}, [data]);
   const currentProviderId = data?.currentProviderId ?? "";
@@ -72,7 +67,7 @@ function App() {
     saveUsageScript,
   } = useProviderActions(activeApp);
 
-  // 监听来自托盘菜单的切换事件
+  // 监听来自托盘菜单的切换事件；当托盘切换到当前 app 时刷新列表。
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
 
@@ -96,65 +91,7 @@ function App() {
     };
   }, [activeApp, refetch]);
 
-  // 应用启动时检测所有应用的环境变量冲突
-  useEffect(() => {
-    const checkEnvOnStartup = async () => {
-      try {
-        const allConflicts = await checkAllEnvConflicts();
-        const flatConflicts = Object.values(allConflicts).flat();
-
-        if (flatConflicts.length > 0) {
-          setEnvConflicts(flatConflicts);
-          const dismissed = sessionStorage.getItem("env_banner_dismissed");
-          if (!dismissed) {
-            setShowEnvBanner(true);
-          }
-        }
-      } catch (error) {
-        console.error(
-          "[App] Failed to check environment conflicts on startup:",
-          error,
-        );
-      }
-    };
-
-    checkEnvOnStartup();
-  }, []);
-
-  // 切换应用时检测当前应用的环境变量冲突
-  useEffect(() => {
-    const checkEnvOnSwitch = async () => {
-      try {
-        const conflicts = await checkEnvConflicts(activeApp);
-
-        if (conflicts.length > 0) {
-          // 合并新检测到的冲突
-          setEnvConflicts((prev) => {
-            const existingKeys = new Set(
-              prev.map((c) => `${c.varName}:${c.sourcePath}`),
-            );
-            const newConflicts = conflicts.filter(
-              (c) => !existingKeys.has(`${c.varName}:${c.sourcePath}`),
-            );
-            return [...prev, ...newConflicts];
-          });
-          const dismissed = sessionStorage.getItem("env_banner_dismissed");
-          if (!dismissed) {
-            setShowEnvBanner(true);
-          }
-        }
-      } catch (error) {
-        console.error(
-          "[App] Failed to check environment conflicts on app switch:",
-          error,
-        );
-      }
-    };
-
-    checkEnvOnSwitch();
-  }, [activeApp]);
-
-  // 打开网站链接
+  // 打开网站链接，保持原有错误提示体验。
   const handleOpenWebsite = async (url: string) => {
     try {
       await settingsApi.openExternal(url);
@@ -181,24 +118,23 @@ function App() {
     setConfirmDelete(null);
   };
 
-  // 复制供应商
+  // 复制供应商：保持 sortIndex 逻辑与原行为一致。
   const handleDuplicateProvider = async (provider: Provider) => {
-    // 1️⃣ 计算新的 sortIndex：如果原供应商有 sortIndex，则复制它
     const newSortIndex =
       provider.sortIndex !== undefined ? provider.sortIndex + 1 : undefined;
 
     const duplicatedProvider: Omit<Provider, "id" | "createdAt"> = {
       name: `${provider.name} copy`,
-      settingsConfig: JSON.parse(JSON.stringify(provider.settingsConfig)), // 深拷贝
+      settingsConfig: JSON.parse(JSON.stringify(provider.settingsConfig)),
       websiteUrl: provider.websiteUrl,
       category: provider.category,
-      sortIndex: newSortIndex, // 复制原 sortIndex + 1
+      sortIndex: newSortIndex,
       meta: provider.meta
         ? JSON.parse(JSON.stringify(provider.meta))
-        : undefined, // 深拷贝
+        : undefined,
     };
 
-    // 2️⃣ 如果原供应商有 sortIndex，需要将后续所有供应商的 sortIndex +1
+    // sortIndex 冲突处理：为插入位置腾出空间。
     if (provider.sortIndex !== undefined) {
       const updates = Object.values(providers)
         .filter(
@@ -212,7 +148,6 @@ function App() {
           sortIndex: p.sortIndex! + 1,
         }));
 
-      // 先更新现有供应商的 sortIndex，为新供应商腾出位置
       if (updates.length > 0) {
         try {
           await providersApi.updateSortOrder(updates, activeApp);
@@ -223,16 +158,15 @@ function App() {
               defaultValue: "排序更新失败",
             }),
           );
-          return; // 如果排序更新失败，不继续添加
+          return; // 排序失败则不继续新增
         }
       }
     }
 
-    // 3️⃣ 添加复制的供应商
     await addProvider(duplicatedProvider);
   };
 
-  // 导入配置成功后刷新
+  // 导入配置成功后刷新列表与托盘菜单（保持与原逻辑一致）。
   const handleImportSuccess = async () => {
     await refetch();
     try {
@@ -242,271 +176,61 @@ function App() {
     }
   };
 
-  const renderContent = () => {
-    switch (currentView) {
-      case "settings":
-        return (
-          <SettingsPage
-            open={true}
-            onOpenChange={() => setCurrentView("providers")}
-            onImportSuccess={handleImportSuccess}
-          />
-        );
-      case "prompts":
-        return (
-          <PromptPanel
-            ref={promptPanelRef}
-            open={true}
-            onOpenChange={() => setCurrentView("providers")}
-            appId={activeApp}
-          />
-        );
-      case "skills":
-        return (
-          <SkillsPage
-            ref={skillsPageRef}
-            onClose={() => setCurrentView("providers")}
-          />
-        );
-      case "mcp":
-        return (
-          <UnifiedMcpPanel
-            ref={mcpPanelRef}
-            onOpenChange={() => setCurrentView("providers")}
-          />
-        );
-      case "agents":
-        return <AgentsPanel onOpenChange={() => setCurrentView("providers")} />;
-      default:
-        return (
-          <div className="mx-auto max-w-[56rem] px-6 mt-4 space-y-4">
-            <ProviderList
-              providers={providers}
-              currentProviderId={currentProviderId}
-              appId={activeApp}
-              isLoading={isLoading}
-              onSwitch={switchProvider}
-              onEdit={setEditingProvider}
-              onDelete={setConfirmDelete}
-              onDuplicate={handleDuplicateProvider}
-              onConfigureUsage={setUsageProvider}
-              onOpenWebsite={handleOpenWebsite}
-            />
-          </div>
-        );
-    }
-  };
+  // 根据当前待删除项生成确认框文案，避免在弹窗组件内耦合翻译逻辑。
+  const confirmDialogTitle = t("confirm.deleteProvider");
+  const confirmDialogMessage = confirmDelete
+    ? t("confirm.deleteProviderMessage", { name: confirmDelete.name })
+    : "";
 
   return (
-    <div
-      className="flex min-h-screen flex-col bg-background text-foreground selection:bg-primary/30"
-      style={{ overflowX: "hidden" }}
-    >
-      {/* 全局拖拽区域（顶部 4px），避免上边框无法拖动 */}
-      <div
-        className="fixed top-0 left-0 right-0 h-4 z-[60]"
-        data-tauri-drag-region
-        style={{ WebkitAppRegion: "drag" } as any}
-      />
-      {/* 环境变量警告横幅 */}
-      {showEnvBanner && envConflicts.length > 0 && (
-        <EnvWarningBanner
-          conflicts={envConflicts}
-          onDismiss={() => {
-            setShowEnvBanner(false);
-            sessionStorage.setItem("env_banner_dismissed", "true");
-          }}
-          onDeleted={async () => {
-            // 删除后重新检测
-            try {
-              const allConflicts = await checkAllEnvConflicts();
-              const flatConflicts = Object.values(allConflicts).flat();
-              setEnvConflicts(flatConflicts);
-              if (flatConflicts.length === 0) {
-                setShowEnvBanner(false);
-              }
-            } catch (error) {
-              console.error(
-                "[App] Failed to re-check conflicts after deletion:",
-                error,
-              );
+    <AppShell
+      header={
+        <>
+          {/* 顶部 4px 拖拽区域，确保窗口顶部可拖动 */}
+          <div
+            className="fixed top-0 left-0 right-0 h-4 z-[60]"
+            data-tauri-drag-region
+            style={{ WebkitAppRegion: "drag" } as any}
+          />
+
+          <AppHeader
+            currentView={currentView}
+            activeApp={activeApp}
+            onBackToProviders={() => setCurrentView("providers")}
+            onOpenSettings={() => setCurrentView("settings")}
+            leftAddon={
+              currentView === "providers" ? (
+                <UpdateBadge onClick={() => setCurrentView("settings")}/>
+              ) : null
             }
-          }}
-        />
-      )}
-
-      <header
-        className="glass-header fixed top-0 z-50 w-full py-3 transition-all duration-300"
-        data-tauri-drag-region
-        style={{ WebkitAppRegion: "drag" } as any}
-      >
-        <div className="h-4 w-full" aria-hidden data-tauri-drag-region />
-        <div
-          className="mx-auto max-w-[56rem] px-6 flex flex-wrap items-center justify-between gap-2"
-          data-tauri-drag-region
-          style={{ WebkitAppRegion: "drag" } as any}
-        >
-          <div
-            className="flex items-center gap-1"
-            style={{ WebkitAppRegion: "no-drag" } as any}
-          >
-            {currentView !== "providers" ? (
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setCurrentView("providers")}
-                  className="mr-2 rounded-lg"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </Button>
-                <h1 className="text-lg font-semibold">
-                  {currentView === "settings" && t("settings.title")}
-                  {currentView === "prompts" &&
-                    t("prompts.title", { appName: t(`apps.${activeApp}`) })}
-                  {currentView === "skills" && t("skills.title")}
-                  {currentView === "mcp" && t("mcp.unifiedPanel.title")}
-                  {currentView === "agents" && "Agents"}
-                </h1>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center gap-2">
-                  <a
-                    href="https://github.com/ziye0180/cli-hub"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xl font-semibold text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-                  >
-                    CLI Hub
-                  </a>
-                  <div className="h-5 w-[1px] bg-black/10 dark:bg-white/15" />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setCurrentView("settings")}
-                    title={t("common.settings")}
-                    className="hover:bg-black/5 dark:hover:bg-white/5"
-                  >
-                    <Settings className="h-4 w-4" />
-                  </Button>
-                </div>
-                <UpdateBadge onClick={() => setCurrentView("settings")} />
-              </>
-            )}
-          </div>
-
-          <div
-            className="flex items-center gap-2"
-            style={{ WebkitAppRegion: "no-drag" } as any}
-          >
-            {currentView === "prompts" && (
-              <Button
-                onClick={() => promptPanelRef.current?.openAdd()}
-                className="bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40"
-                title={t("prompts.add")}
-              >
-                <Plus className="h-4 w-4 mr-1.5" />
-                {t("prompts.add")}
-              </Button>
-            )}
-            {currentView === "mcp" && (
-              <Button
-                onClick={() => mcpPanelRef.current?.openAdd()}
-                className="bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40"
-                title={t("mcp.unifiedPanel.addServer")}
-              >
-                <Plus className="h-4 w-4 mr-1.5" />
-                {t("mcp.unifiedPanel.addServer")}
-              </Button>
-            )}
-            {currentView === "skills" && (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => skillsPageRef.current?.refresh()}
-                  className="hover:bg-black/5 dark:hover:bg-white/5"
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  {t("skills.refresh")}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => skillsPageRef.current?.openRepoManager()}
-                  className="hover:bg-black/5 dark:hover:bg-white/5"
-                >
-                  <Settings className="h-4 w-4 mr-2" />
-                  {t("skills.repoManager")}
-                </Button>
-              </>
-            )}
-            {currentView === "providers" && (
-              <>
-                <AppSwitcher activeApp={activeApp} onSwitch={setActiveApp} />
-
-                <div className="h-8 w-[1px] bg-black/10 dark:bg-white/10 mx-1" />
-
-                <div className="glass p-1 rounded-xl flex items-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setCurrentView("prompts")}
-                    className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
-                    title={t("prompts.manage")}
-                  >
-                    <Book className="h-4 w-4" />
-                    <span className="ml-1.5">{t("prompts.manage")}</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setCurrentView("skills")}
-                    className={`text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 ${!isClaudeApp ? "opacity-0 pointer-events-none" : ""}`}
-                    title={t("skills.manage")}
-                    disabled={!isClaudeApp}
-                    tabIndex={!isClaudeApp ? -1 : undefined}
-                  >
-                    <Wrench className="h-4 w-4" />
-                    <span className="ml-1.5">{t("skills.manage")}</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setCurrentView("mcp")}
-                    className="text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
-                    title="MCP"
-                  >
-                    <Server className="h-4 w-4" />
-                    <span className="ml-1.5">MCP</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setCurrentView("agents")}
-                    className={`text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 ${!isClaudeApp ? "opacity-0 pointer-events-none" : ""}`}
-                    title={t("agents.manage")}
-                    disabled={!isClaudeApp}
-                    tabIndex={!isClaudeApp ? -1 : undefined}
-                  >
-                    <Bot className="h-4 w-4" />
-                    <span className="ml-1.5">{t("agents.manage")}</span>
-                  </Button>
-                </div>
-
-                <Button
-                  onClick={() => setIsAddOpen(true)}
-                  className="ml-2 bg-orange-500 hover:bg-orange-600 dark:bg-orange-500 dark:hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 dark:shadow-orange-500/40"
-                >
-                  <Plus className="h-4 w-4 mr-1.5" />
-                  {t("provider.addProvider")}
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
+            rightActions={
+              <ViewActions
+                currentView={currentView}
+                activeApp={activeApp}
+                isClaudeApp={isClaudeApp}
+                onSetCurrentView={setCurrentView}
+                onAddProvider={() => setIsAddOpen(true)}
+                onOpenPromptsAdd={() => {}}
+                onOpenMcpAdd={() => {}}
+                onSkillsRefresh={() => {}}
+                onOpenSkillRepoManager={() => {}}
+                onSwitchApp={setActiveApp}
+                promptPanelRef={promptPanelRef}
+                mcpPanelRef={mcpPanelRef}
+                skillsPageRef={skillsPageRef}
+              />
+            }
+          />
+        </>
+      }
+    >
+      {/* 横幅放在 Header 下方，保持原有层级关系 */}
+      <EnvConflictBanner
+        showEnvBanner={showEnvBanner}
+        envConflicts={envConflicts}
+        onDismiss={handleDismissBanner}
+        onDeleted={handleRecheckAfterDelete}
+      />
 
       <main
         className={`flex-1 overflow-y-auto pb-12 animate-fade-in scroll-overlay ${
@@ -514,56 +238,44 @@ function App() {
         }`}
         style={{ overflowX: "hidden" }}
       >
-        {renderContent()}
+        <AppContent
+          currentView={currentView}
+          activeApp={activeApp}
+          providers={providers}
+          currentProviderId={currentProviderId}
+          isLoading={isLoading}
+          onSwitchProvider={switchProvider}
+          onEditProvider={setEditingProvider}
+          onDeleteProvider={setConfirmDelete}
+          onDuplicateProvider={handleDuplicateProvider}
+          onConfigureUsage={setUsageProvider}
+          onOpenWebsite={handleOpenWebsite}
+          onImportSuccess={handleImportSuccess}
+          setCurrentView={setCurrentView}
+          promptPanelRef={promptPanelRef}
+          mcpPanelRef={mcpPanelRef}
+          skillsPageRef={skillsPageRef}
+        />
       </main>
 
-      <AddProviderDialog
-        open={isAddOpen}
-        onOpenChange={setIsAddOpen}
+      <ProvidersModals
         appId={activeApp}
-        onSubmit={addProvider}
+        isAddOpen={isAddOpen}
+        setIsAddOpen={setIsAddOpen}
+        editingProvider={editingProvider}
+        setEditingProvider={setEditingProvider}
+        usageProvider={usageProvider}
+        setUsageProvider={setUsageProvider}
+        confirmDelete={confirmDelete}
+        setConfirmDelete={setConfirmDelete}
+        onAddProvider={addProvider}
+        onEditProvider={handleEditProvider}
+        onDeleteConfirmed={handleConfirmDelete}
+        onSaveUsageScript={saveUsageScript}
+        confirmDialogTitle={confirmDialogTitle}
+        confirmDialogMessage={confirmDialogMessage}
       />
-
-      <EditProviderDialog
-        open={Boolean(editingProvider)}
-        provider={editingProvider}
-        onOpenChange={(open) => {
-          if (!open) {
-            setEditingProvider(null);
-          }
-        }}
-        onSubmit={handleEditProvider}
-        appId={activeApp}
-      />
-
-      {usageProvider && (
-        <UsageScriptModal
-          provider={usageProvider}
-          appId={activeApp}
-          isOpen={Boolean(usageProvider)}
-          onClose={() => setUsageProvider(null)}
-          onSave={(script) => {
-            void saveUsageScript(usageProvider, script);
-          }}
-        />
-      )}
-
-      <ConfirmDialog
-        isOpen={Boolean(confirmDelete)}
-        title={t("confirm.deleteProvider")}
-        message={
-          confirmDelete
-            ? t("confirm.deleteProviderMessage", {
-                name: confirmDelete.name,
-              })
-            : ""
-        }
-        onConfirm={() => void handleConfirmDelete()}
-        onCancel={() => setConfirmDelete(null)}
-      />
-
-      <DeepLinkImportDialog />
-    </div>
+    </AppShell>
   );
 }
 
