@@ -207,7 +207,7 @@ export function ProviderCard({
             />
           </div>
 
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5 opacity-0 pointer-events-none group-hover:opacity-100 group-focus-within:opacity-100 group-hover:pointer-events-auto group-focus-within:pointer-events-auto transition-all duration-200 translate-x-2 group-hover:translate-x-0 group-focus-within:translate-x-0">
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
             <ProviderActions
               isCurrent={isCurrent}
               onSwitch={() => onSwitch(provider)}

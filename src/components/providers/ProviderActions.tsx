@@ -1,6 +1,11 @@
 import { BarChart3, Check, Copy, Edit, Play, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 interface ProviderActionsProps {
@@ -50,49 +55,66 @@ export function ProviderActions({
       </Button>
 
       <div className="flex items-center gap-1">
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={onEdit}
-          title={t("common.edit")}
-          className={iconButtonClass}
-        >
-          <Edit className="h-4 w-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={onEdit}
+              className={iconButtonClass}
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{t("common.edit")}</TooltipContent>
+        </Tooltip>
 
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={onDuplicate}
-          title={t("provider.duplicate")}
-          className={iconButtonClass}
-        >
-          <Copy className="h-4 w-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={onDuplicate}
+              className={iconButtonClass}
+            >
+              <Copy className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{t("provider.duplicate")}</TooltipContent>
+        </Tooltip>
 
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={onConfigureUsage}
-          title={t("provider.configureUsage")}
-          className={iconButtonClass}
-        >
-          <BarChart3 className="h-4 w-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={onConfigureUsage}
+              className={iconButtonClass}
+            >
+              <BarChart3 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{t("provider.configureUsage")}</TooltipContent>
+        </Tooltip>
 
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={isCurrent ? undefined : onDelete}
-          title={t("common.delete")}
-          className={cn(
-            iconButtonClass,
-            !isCurrent && "hover:text-red-500 dark:hover:text-red-400",
-            isCurrent && "opacity-40 cursor-not-allowed text-muted-foreground",
-          )}
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={isCurrent ? undefined : onDelete}
+              className={cn(
+                iconButtonClass,
+                !isCurrent && "hover:text-red-500 dark:hover:text-red-400",
+                isCurrent &&
+                  "opacity-40 cursor-not-allowed text-muted-foreground",
+              )}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{t("common.delete")}</TooltipContent>
+        </Tooltip>
       </div>
     </div>
   );
